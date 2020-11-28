@@ -1,8 +1,8 @@
 let canPlay;
 let applyEffect;
 
-const canvas = document.getElementById("Canvas");
-const context = canvas.getContext("2d");
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
 const startButton = document.getElementById("StartButton");
 const toggleButton = document.getElementById("ToggleButton");
 const video = document.getElementById("SourceVideo");
@@ -31,7 +31,6 @@ function init() {
 }
 
 function readyToPlay() {
-  // Set the canvas the same width and height of the video
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
 
@@ -43,19 +42,14 @@ function readyToPlay() {
 // const y = e.layerY;
 // });
 function drawFrame(video) {
-  context.drawImage(video, 0, 0);
+  ctx.drawImage(video, 0, 0);
 
   if (applyEffect) {
-    let imageData = context.getImageData(
-      0,
-      0,
-      (canvas.width * 2) / 3,
-      canvas.height
-    );
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
     invertColors(imageData.data);
 
-    context.putImageData(imageData, 0, 0);
+    ctx.putImageData(imageData, 0, 0);
   }
 
   setTimeout(function () {
